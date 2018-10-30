@@ -1,0 +1,16 @@
+{
+    "name": "dz/img-php-library",
+    "description": "GH Adv PHP HW 4",
+    "type": "library",
+    "require": {
+        "php": "7.*"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dmitry Zraiev",
+            "email": "dmitryzrayev@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable"
+}
