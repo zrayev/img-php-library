@@ -2,27 +2,21 @@
 
 namespace Zraiev\ImageLibHandler;
 
-use Zraiev\ImageLibHandler\AbstractImage;
-
 class Image extends AbstractImage
 {
+    /**
+     * @param $file
+     */
     public function open($file)
     {
+        // TODO: Implement open() method.
     }
 
+    /**
+     * @param $file object
+     */
     public function save($file)
     {
-    }
-
-    public function resize($width, $height, $ratio)
-    {
-    }
-
-    public function crop($width, $height, $x, $y)
-    {
-    }
-
-    public function rotate($angle, $background)
-    {
+        // TODO: Implement save() method.
     }
 }

@@ -4,9 +4,15 @@ namespace Zraiev\ImageLibHandler;
 
 abstract class AbstractImage
 {
+    /**
+     * @param $file
+     * @return mixed
+     */
     abstract public function open($file);
+
+    /**
+     * @param $file object
+     * @return mixed
+     */
     abstract public function save($file);
-    abstract public function resize($width, $height, $ratio);
-    abstract public function crop($width, $height, $x, $y);
-    abstract public function rotate($angle, $background);
 }
