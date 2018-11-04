@@ -4,7 +4,9 @@
     "type": "library",
     "require": {
         "php": "7.*",
-        "ext-gd": "*"
+        "ext-gd": "*",
+        "ext-exif": "*",
+        "ext-fileinfo": "*"
     },
     "license": "MIT",
     "authors": [

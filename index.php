@@ -7,9 +7,9 @@ use Zraiev\ImageLibHandler\Image;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-echo('Image handling');
+$image = new Image(__DIR__. '/exampes/test.jpg');
+//$image = new Image(__DIR__. '/exampes/test.png');
 
-$image = new Image(__DIR__."/exampes/test.jpg");
 $imageFile = $image->open();
 
 //$imageCrop = new Crop($imageFile);
@@ -19,8 +19,9 @@ $imageFile = $image->open();
 //$newImage = $imageResize->resize(300, 200);
 
 $imageRotate = new Rotate($imageFile);
-$newImage = $imageRotate->rotate(35, 1);
+$newImage = $imageRotate->rotate(65, 0);
 
-$image = new Image($newImage);
+//save on jpg or png format
+$image = new Image($newImage, Image::TYPE_PNG);
 $image->save();
 $image->show();

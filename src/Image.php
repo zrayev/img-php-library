@@ -4,19 +4,28 @@ namespace Zraiev\ImageLibHandler;
 
 use Exception;
 
+/**
+ * @property mixed type
+ */
 class Image extends AbstractImage
 {
     protected $file;
 
-    const TYPE = 'jpg';
+    protected $type;
+
+    const TYPE_JPG = 'jpg';
+    const TYPE_JPEG = 'jpeg';
+    const TYPE_PNG = 'png';
 
     /**
      * Image constructor.
      * @param $file resource
+     * @param $type string
      */
-    public function __construct($file)
+    public function __construct($file, $type = null)
     {
         $this->file = $file;
+        $this->type = $type ?? $this->checkFormat();
     }
 
     /**
@@ -24,7 +33,8 @@ class Image extends AbstractImage
      */
     public function checkFormat()
     {
-        $format = explode('.', $this->file);
+        $mime = image_type_to_mime_type(exif_imagetype($this->file));
+        $format = explode('/', $mime);
 
         return end($format);
     }
@@ -35,26 +45,31 @@ class Image extends AbstractImage
      */
     public function open()
     {
-        if ($this->checkFormat() === self::TYPE) {
-            $file = imagecreatefromjpeg($this->file);
-            imagedestroy($this->file);
-            return $file;
-        } else {
-            throw new Exception('Wrong format!');
-        }
+        $file = $this->type !== self::TYPE_JPG && $this->type !== self::TYPE_JPEG ? imagecreatefrompng($this->file) : imagecreatefromjpeg($this->file);
+
+        imagedestroy($this->file);
+
+        return $file;
     }
 
+    /**
+     * @return void
+     */
     public function save()
     {
-        imagejpeg($this->file, $_SERVER["DOCUMENT_ROOT"]."/output.jpg");
+        if ($this->type !== self::TYPE_JPG && $this->type !== self::TYPE_JPEG) {
+            imagepng($this->file, $_SERVER["DOCUMENT_ROOT"]."/output.png");
+        } else {
+            imagejpeg($this->file, $_SERVER["DOCUMENT_ROOT"]."/output.jpg");
+        }
+
         imagedestroy($this->file);
     }
 
     public function show()
     {
-        $image = file_get_contents('output.jpg');
-        header('Content-type: image/jpeg');
-
-        return $image;
+        $imageData = base64_encode(file_get_contents('output.'.$this->type));
+        $src = 'data: '.mime_content_type('output.'.$this->type).';base64,'.$imageData;
+        echo '<img src="' . $src . '">';
     }
 }
