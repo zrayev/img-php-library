@@ -9,6 +9,7 @@ interface CropInterface
      * @param $height
      * @param $x
      * @param $y
+     *
      * @return mixed
      */
     public function crop($width, $height, $x, $y);

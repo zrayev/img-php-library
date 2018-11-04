@@ -2,21 +2,59 @@
 
 namespace Zraiev\ImageLibHandler;
 
+use Exception;
+
 class Image extends AbstractImage
 {
+    protected $file;
+
+    const TYPE = 'jpg';
+
     /**
-     * @param $file
+     * Image constructor.
+     * @param $file resource
      */
-    public function open($file)
+    public function __construct($file)
     {
-        // TODO: Implement open() method.
+        $this->file = $file;
     }
 
     /**
-     * @param $file object
+     * @return mixed
      */
-    public function save($file)
+    public function checkFormat()
     {
-        // TODO: Implement save() method.
+        $format = explode('.', $this->file);
+
+        return end($format);
+    }
+
+    /**
+     * @return resource
+     * @throws Exception
+     */
+    public function open()
+    {
+        if ($this->checkFormat() === self::TYPE) {
+            $file = imagecreatefromjpeg($this->file);
+            imagedestroy($this->file);
+            return $file;
+        } else {
+            throw new Exception('Wrong format!');
+        }
+    }
+
+    public function save()
+    {
+        imagejpeg($this->file, $_SERVER["DOCUMENT_ROOT"]."/output.jpg");
+        imagedestroy($this->file);
+    }
+
+    public function show()
+    {
+        $image = file_get_contents('output.jpg');
+        header('Content-type: image/jpeg');
+
+        return $image;
     }
 }

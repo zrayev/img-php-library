@@ -5,14 +5,12 @@ namespace Zraiev\ImageLibHandler;
 abstract class AbstractImage
 {
     /**
-     * @param $file
      * @return mixed
      */
-    abstract public function open($file);
+    abstract public function open();
 
     /**
-     * @param $file object
      * @return mixed
      */
-    abstract public function save($file);
+    abstract public function save();
 }

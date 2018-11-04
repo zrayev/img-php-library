@@ -2,17 +2,32 @@
 
 namespace Zraiev\ImageLibHandler\Handlers;
 
-class Crop implements CropInterface
+class Crop
 {
+    protected $img;
+
     /**
-     * @param $img object
-     * @param $width int
-     * @param $height int
-     * @param $x int
-     * @param $y int
+     * Crop constructor.
+     * @param $img resource
      */
-    public function crop($img, $width, $height, $x, $y)
+    public function __construct($img)
     {
-        // TODO: Implement crop() method.
+        $this->img = $img;
+    }
+
+    /**
+     * @param $width
+     * @param $height
+     * @param $x
+     * @param $y
+     *
+     * @return bool|resource
+     */
+    public function crop($width, $height, $x, $y)
+    {
+        $imageCrop = imagecrop($this->img, ['x' => $x, 'y' => $y, 'width' => $width, 'height' => $height]);
+        imagedestroy($this->img);
+
+        return $imageCrop;
     }
 }

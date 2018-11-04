@@ -4,14 +4,28 @@ namespace Zraiev\ImageLibHandler\Handlers;
 
 class Rotate implements RotateInterface
 {
+    protected $img;
+
     /**
-     * @param $img
+     * Rotate constructor.
+     * @param $img resource
+     */
+    public function __construct($img)
+    {
+        $this->img = $img;
+    }
+
+    /**
      * @param $angle
      * @param $background
-     * @return mixed|void
+     *
+     * @return resource
      */
-    public function rotate($img, $angle, $background)
+    public function rotate($angle, $background)
     {
-        // TODO: Implement rotate() method.
+        $rotate = imagerotate($this->img, $angle, $background);
+        imagedestroy($this->img);
+
+        return $rotate;
     }
 }
