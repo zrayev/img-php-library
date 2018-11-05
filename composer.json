@@ -3,7 +3,10 @@
     "description": "GH Adv PHP HW 4",
     "type": "library",
     "require": {
-        "php": "7.*"
+        "php": "7.*",
+        "ext-gd": "*",
+        "ext-exif": "*",
+        "ext-fileinfo": "*"
     },
     "license": "MIT",
     "authors": [
@@ -12,5 +15,10 @@
             "email": "dmitryzrayev@gmail.com"
         }
     ],
-    "minimum-stability": "stable"
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "Zraiev\\ImageLibHandler\\": "src"
+        }
+    }
 }
